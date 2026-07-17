@@ -1,0 +1,19 @@
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+from groq import Groq
+load_dotenv()
+api_key=os.getenv("GROQ_API_KEY")
+if not api_key:
+    raise ValueError("GROQ_API_KEY environment variable is not set.")
+client=Groq(api_key=api_key)
+model="llama-3.3-70b-versatile"
+role="user"
+prompt="Write a short story about a robot learning to dance."
+message={
+    "role":role,
+    "content":prompt
+}
+messages=[message]
+response=client.chat.completions.create(model=model, messages=messages)
+print(response)
